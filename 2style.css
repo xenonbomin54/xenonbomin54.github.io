@@ -1,0 +1,56 @@
+div {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    background-color: white;
+    align-items: center;
+    padding-bottom: 20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+    width: 30%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+input {
+    margin: 10px 0;
+    padding: 8px;
+    width: 200px;
+    border: none;
+    background-color: #00938C;
+    color: white;
+    border-color: white;
+}
+
+body {
+    background-image: url('제목을 입력해주세요_-001.png');
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-size: cover;
+    background-position: center;
+}
+    
+#loginpw {
+    margin-bottom: 30px;
+}
+
+#UserPw2 {
+    margin-bottom: 30px;
+}
+
+button {
+    color: white;
+    padding: 5px;
+    border: none;
+    background-color: #00938C;
+    margin-bottom: 60px;
+}
+
+input::placeholder {
+    color: white;
+}
