@@ -1,11 +1,10 @@
-div {
+#bigbox {
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     background-color: white;
     align-items: center;
     padding-bottom: 20px;
     padding-top: 30px;
-    padding-bottom: 30px;
-    text-align: center;
+    text-align: center; 
     width: 30%;
     border-radius: 20px;
     display: flex;
@@ -27,20 +26,12 @@ input {
 body {
     background-image: url('제목을 입력해주세요_-001.png');
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
     background-size: cover;
     background-position: center;
-}
-    
-#loginpw {
-    margin-bottom: 30px;
-}
-
-#UserPw2 {
-    margin-bottom: 30px;
 }
 
 button {
@@ -51,6 +42,41 @@ button {
     margin-bottom: 60px;
 }
 
+.collapsible-box {
+    margin-bottom: 10px;
+    max-height: 20px;
+    transition: 0.3s ease-in-out;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    width: 70%;
+    overflow: auto;
+}
+
+.collapsible-box.open {
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-bottom: 10px;
+    max-height: 400px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    width: 70%;
+    overflow: auto;
+}
+
 input::placeholder {
     color: white;
+}
+
+html, body {
+    height: 100%;
+    overflow-y: auto;
+}
+
+input[type="checkbox"] {
+    margin-right: -90px;
+}
+
+label {
+    margin-right: 70px;
+    margin-bottom: 30px;
 }
