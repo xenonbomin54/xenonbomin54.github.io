@@ -1,0 +1,114 @@
+/* 기본 스타일 */
+body {
+    background-image: url('제목을 입력해주세요_-001.png');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-size: cover;
+    background-position: center;
+}
+
+#bigbox {
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    background-color: white;
+    padding: 30px;
+    text-align: center; 
+    width: 30%;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 입력 필드 스타일 개선 */
+input {
+    margin: 10px 0;
+    padding: 12px;
+    width: 90%;
+    max-width: 300px;
+    border: 2px solid #ccc;
+    background-color: #f9f9f9;
+    color: black;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+
+input::placeholder {
+    color: #aaa;
+}
+
+/* 입력 필드 포커스 효과 */
+input:focus {
+    border: 2px solid #007A70;
+    background-color: white;
+}
+
+/* 버튼 스타일 */
+button {
+    color: white;
+    padding: 12px;
+    border: none;
+    background-color: #00938C;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 300px;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
+button:hover {
+    background-color: #007A70;
+}
+
+/* 반응형 웹 적용 */
+@media screen and (max-width: 1024px) {
+    #bigbox {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #bigbox {
+        width: 70%;
+    }
+    
+    h1 {
+        font-size: 20px;
+    }
+    
+    h4 {
+        font-size: 14px;
+    }
+
+    input, button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #bigbox {
+        width: 90%;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 18px;
+    }
+    
+    h4 {
+        font-size: 12px;
+    }
+
+    input, button {
+        font-size: 12px;
+        padding: 8px;
+    }
+}

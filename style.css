@@ -1,0 +1,73 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+#topdiv {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 5%;
+    color: #ffffff;
+    background-color: #00938c;
+}
+
+#topdiv img {
+    width: 50px;
+}
+
+#middiv {
+    padding: 20px;
+    color: #00938c;
+}
+
+#office {
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    margin: 20px 0;
+}
+
+button {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+    margin: 10px;
+    border: solid 2px #00938c;
+    border-radius: 10px;
+    color: #ffffff;
+    background-color: #00938c;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    color: #00938c;
+    background-color: #ffffff;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+    #topdiv {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #topdiv img {
+        width: 40px;
+    }
+
+    #middiv {
+        font-size: 1rem;
+    }
+
+    button {
+        font-size: 1rem;
+        padding: 8px 15px;
+    }
+}
