@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>커뮤니티</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .primary-color { background-color: #00938c; }
+        .primary-hover:hover { background-color: #007a74; }
+    </style>
+</head>
+<body class="bg-gray-100 p-6">
+    <header class="primary-color text-white p-4 text-center text-xl font-bold rounded-md shadow-md">
+        커뮤니티
+    </header>
+
+    <div class="max-w-4xl mx-auto mt-6 space-y-4">
+        <div class="flex gap-2">
+            <input type="text" class="flex-1 p-2 border rounded-md" placeholder="게시글을 검색하세요...">
+            <button class="primary-color text-white p-2 rounded-md primary-hover">검색</button>
+        </div>
+
+        <button onclick="openPostModal()" class="w-full primary-color text-white p-3 rounded-md primary-hover">새 글 작성</button>
+
+        <div id="postList" class="p-4 bg-white shadow-md rounded-lg space-y-2">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="text-lg font-semibold">커뮤니티 인기 글</h2>
+                <i data-lucide="users" class="text-[#00938c]"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- 글 작성 모달 -->
+    <div id="postModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+            <h2 class="text-xl font-semibold mb-4">새 글 작성</h2>
+            <input type="text" id="postTitle" class="w-full p-2 border rounded-md mb-2" placeholder="제목을 입력하세요...">
+            <textarea id="postContent" class="w-full p-2 border rounded-md h-32" placeholder="내용을 입력하세요..."></textarea>
+            <div class="flex justify-end gap-2 mt-4">
+                <button onclick="closePostModal()" class="p-2 border rounded-md">취소</button>
+                <button onclick="submitPost()" class="primary-color text-white p-2 rounded-md primary-hover">작성</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        async function fetchPosts() {
+            const response = await fetch("http://localhost:5000/posts");
+            const posts = await response.json();
+            const postList = document.getElementById("postList");
+            postList.innerHTML = `
+                <div class="flex justify-between items-center mb-2">
+                    <h2 class="text-lg font-semibold">커뮤니티 인기 글</h2>
+                    <i data-lucide="users" class="text-[#00938c]"></i>
+                </div>
+            `;
+
+            posts.forEach(post => {
+                const postItem = document.createElement("div");
+                postItem.className = "p-3 border rounded-lg hover:bg-gray-50 transition cursor-pointer";
+                postItem.innerHTML = `
+                    <h3 class="text-md font-medium text-gray-800">${post.title}</h3>
+                    <p class="text-sm text-gray-600">${post.content}</p>
+                    <div class="flex items-center gap-2 text-sm text-gray-500 mt-1">
+                        <i data-lucide="message-circle" class="w-4 h-4"></i>
+                        <span>댓글 ${post.comments}</span>
+                    </div>
+                `;
+                postList.appendChild(postItem);
+            });
+        }
+
+        async function submitPost() {
+            const title = document.getElementById("postTitle").value;
+            const content = document.getElementById("postContent").value;
+
+            if (!title || !content) {
+                alert("제목과 내용을 입력해주세요!");
+                return;
+            }
+
+            const response = await fetch("http://localhost:5000/posts", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ title, content })
+            });
+
+            if (response.ok) {
+                document.getElementById("postTitle").value = "";
+                document.getElementById("postContent").value = "";
+                closePostModal();
+                fetchPosts(); // 글 목록 새로고침
+            } else {
+                alert("글 등록에 실패했습니다.");
+            }
+        }
+
+        function openPostModal() {
+            document.getElementById("postModal").classList.remove("hidden");
+        }
+
+        function closePostModal() {
+            document.getElementById("postModal").classList.add("hidden");
+        }
+
+        fetchPosts(); // 페이지 로드 시 글 목록 불러오기
+
+        async function fetchPosts() {
+    const response = await fetch("http://localhost:5000/posts");
+    const posts = await response.json();
+    const postList = document.getElementById("postList");
+    postList.innerHTML = `
+        <div class="flex justify-between items-center mb-2">
+            <h2 class="text-lg font-semibold">커뮤니티 인기 글</h2>
+            <i data-lucide="users" class="text-[#00938c]"></i>
+        </div>
+    `;
+
+    posts.forEach(post => {
+        const postItem = document.createElement("div");
+        postItem.className = "p-3 border rounded-lg hover:bg-gray-50 transition flex justify-between items-center";
+        postItem.innerHTML = `
+            <div>
+                <h3 class="text-md font-medium text-gray-800">${post.title}</h3>
+                <p class="text-sm text-gray-600">${post.content}</p>
+                <div class="flex items-center gap-2 text-sm text-gray-500 mt-1">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    <span>댓글 ${post.comments}</span>
+                </div>
+            </div>
+            <button onclick="deletePost(${post.id})" class="text-red-500 hover:text-red-700">삭제</button>
+        `;
+        postList.appendChild(postItem);
+    });
+
+    lucide.createIcons();
+}
+
+async function deletePost(id) {
+    if (!confirm("정말 삭제하시겠습니까?")) return;
+
+    const response = await fetch(`http://localhost:5000/posts/${id}`, {
+        method: "DELETE"
+    });
+
+    if (response.ok) {
+        alert("게시글이 삭제되었습니다.");
+        fetchPosts(); // 삭제 후 목록 갱신
+    } else {
+        alert("삭제 실패! 다시 시도하세요.");
+    }
+}
+
+    </script>
+</body>
+</html>
