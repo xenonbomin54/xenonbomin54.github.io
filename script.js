@@ -1,42 +1,60 @@
-var toggleBtn = document.querySelector('.toggle-btn');
-var collapsibleBox = document.querySelector('.collapsible-box');
-
-if (toggleBtn && collapsibleBox) { // 요소가 존재하는 경우에만 실행
-    toggleBtn.addEventListener('click', () => {
-        collapsibleBox.classList.toggle('open');
-    });
-} else {
-    console.error("오류: .toggle-btn 또는 .collapsible-box 요소를 찾을 수 없습니다.");
-}
-
+// 회원가입 데이터 저장 함수
 function saveInput2() {
-    let CreatID = document.getElementById("UserId").value;
-    console.log("아이디: " + CreatID);
+    const userId = document.getElementById("UserId").value;
+    const userPw = document.getElementById("UserPw").value;
+    const userPw2 = document.getElementById("UserPw2").value;
 
-    let CreatPW = document.getElementById("UserPw").value;
-    let CreatPW2 = document.getElementById("UserPw2").value;
+    // 입력값 검증
+    if (!userId || !userPw || !userPw2) {
+        alert("모든 입력란을 채워주세요!");
+        return;
+    }
 
-    if (CreatPW === CreatPW2) {
-        console.log("비번: " + CreatPW);
-    } else {
-        alert("두 비밀번호가 일치하지 않습니다.");
-    } 
+    // 비밀번호 일치 확인
+    if (userPw !== userPw2) {
+        alert("비밀번호가 일치하지 않습니다!");
+        return;
+    }
+
+    // 비밀번호 길이 확인
+    if (userPw.length < 6) {
+        alert("비밀번호는 최소 6자리 이상이어야 합니다.");
+        return;
+    }
+
+    // 사용자 정보 저장 (로컬스토리지 활용)
+    localStorage.setItem("userId", userId);
+    localStorage.setItem("userPw", userPw);
+
+    alert("회원가입이 완료되었습니다!");
+    window.location.href = "document.html";  // 로그인 페이지로 이동
 }
 
-window.onload = function() {
-    var middle = document.documentElement.scrollHeight / 2;
-    window.scrollTo(0, middle);
-};
+// 약관 펼치기/접기 기능
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleBtn = document.querySelector(".toggle-btn");
+    const collapsibleBox = document.querySelector(".collapsible-box");
 
-function checkInput() {
-    var userI1 = document.getElementById('UserId').value;
-    var userI2 = document.getElementById('UserPw').value;
-    
-    // 입력값이 공백인지 확인
-    if (userI1.trim() === "" || userI2.trim() === "") {
-        alert("입력값을 확인해주세요. 공백은 허용되지 않습니다.");
-        return false; // 폼 제출을 막음
+    toggleBtn.addEventListener("click", function () {
+        collapsibleBox.style.display =
+            collapsibleBox.style.display === "none" ? "block" : "none";
+    });
+
+    // 처음 로딩 시 약관 숨기기
+    collapsibleBox.style.display = "none";
+});
+
+function login() {
+    const inputId = document.getElementById("loginId").value;
+    const inputPw = document.getElementById("loginPw").value;
+
+    const savedId = localStorage.getItem("userId");
+    const savedPw = localStorage.getItem("userPw");
+
+    if (inputId === savedId && inputPw === savedPw) {
+        alert("로그인 성공!");
+        window.location.href = "home.html";  // 로그인 후 이동할 페이지
+    } else {
+        alert("아이디 또는 비밀번호가 올바르지 않습니다.");
     }
-    
-    return true; // 폼 제출이 허용됨
 }
